@@ -1,5 +1,6 @@
 ﻿import Link from "next/link";
-import { services, projects } from "@/data/home";
+import { services } from "@/data/home";
+import { projects } from "@/data/projects";
 
 export default function Home() {
   return <main id="main">
