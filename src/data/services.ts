@@ -1,0 +1,20 @@
+export type Service = {
+  slug: string;
+  title: string;
+  shortDescription: string;
+  description: string;
+  bullets: string[];
+  icon: "city" | "home" | "network" | "grid" | "light" | "sun" | "tower" | "backup" | "transformer";
+};
+
+export const services: Service[] = [
+  { slug: "urban-electrification", title: "Urban electrification", shortDescription: "Electrical networks that support growing towns and communities.", description: "We undertake urban electrification work, connecting distribution infrastructure with the needs of local communities.", bullets: ["Electrical network erection and installation", "Distribution infrastructure support", "Field coordination with relevant utility teams"], icon: "city" },
+  { slug: "house-installation", title: "House installation", shortDescription: "Electrical installation for homes, estates and business premises.", description: "We install electrical systems for residential and commercial properties, with work planned to suit each site.", bullets: ["Electrical wiring and fittings", "Installation for homes, estates and businesses", "Site assessment and work planning"], icon: "home" },
+  { slug: "electrical-infrastructure", title: "Electrical infrastructure", shortDescription: "Erection and installation for electrical infrastructure projects.", description: "We support electrical infrastructure projects with design, erection and installation services.", bullets: ["Electrical design and site planning", "Erection and installation works", "Coordination with project stakeholders"], icon: "network" },
+  { slug: "power-distribution", title: "Power distribution", shortDescription: "Distribution works for grid-connected sites and communities.", description: "We work on power distribution infrastructure, including high and low tension networks and related equipment.", bullets: ["Distribution network installation", "High and low tension works", "Transformer supply and installation"], icon: "grid" },
+  { slug: "street-lighting", title: "Street lighting", shortDescription: "Street lighting installation for roads and public spaces.", description: "We install street lighting systems to support safer and more usable roads and public spaces.", bullets: ["Street lighting installation", "Electrical connections and fittings", "Site-specific installation planning"], icon: "light" },
+  { slug: "solar-solutions", title: "Solar solutions", shortDescription: "Solar power solutions for homes and business sites.", description: "We provide solar solutions as part of a site’s electrical power needs.", bullets: ["Solar system installation", "Site assessment for system requirements", "Integration with other site power equipment"], icon: "sun" },
+  { slug: "high-tension-work", title: "High tension work", shortDescription: "High tension line work, relocation and associated installation.", description: "Our teams undertake high tension works, including relocation and installation for electrical infrastructure.", bullets: ["High tension line installation and relocation", "Field work planning and coordination", "Equipment and crew deployment"], icon: "tower" },
+  { slug: "inverter-ats-avr", title: "Inverter, ATS and AVR installation", shortDescription: "Backup and power regulation equipment installation.", description: "We install inverter, automatic transfer switch and automatic voltage regulator equipment for site power needs.", bullets: ["Inverter installation", "ATS installation", "AVR installation"], icon: "backup" },
+  { slug: "transformer-reactivation-installation", title: "Transformer reactivation and installation", shortDescription: "11kV and 33kV transformer reactivation, installation and supply.", description: "We reactivate and install 11kV and 33kV transformers. New transformer supply includes a one-year warranty and is matched to appropriate site capacity.", bullets: ["11kV and 33kV transformer reactivation", "Transformer installation and commissioning", "New transformer supply with one-year warranty", "Capacity selection based on site requirements"], icon: "transformer" },
+];

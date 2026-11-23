@@ -1,0 +1,4 @@
+﻿import Link from "next/link";
+export default function Footer() {
+  return <footer className="site-footer"><div className="container footer-main"><Link className="brand footer-brand" href="/"><span className="brand-symbol">F<span>.</span></span><span className="brand-name">FAKOM<span>INTERNATIONAL SERVICES LTD</span></span></Link><p>Electrical design, erection & installation.<br/>Connecting communities since 2005.</p><div className="footer-contact"><a href="mailto:fakomintlservicesltd@gmail.com">fakomintlservicesltd@gmail.com</a><a href="tel:+2347084207100">+234 708 420 7100</a><a href="tel:+2348033386005">+234 803 338 6005</a></div><nav className="footer-nav" aria-label="Footer navigation"><Link href="/services">Services</Link><Link href="/grid-maintenance">Grid maintenance</Link></nav></div><div className="container footer-bottom"><span>© {new Date().getFullYear()} Fakom International Services Ltd</span><span>Port Harcourt · Owerri</span></div></footer>;
+}
