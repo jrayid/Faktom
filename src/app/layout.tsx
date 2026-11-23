@@ -9,5 +9,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body><a className="skip-link" href="#main">Skip to content</a><Header />{children}<Footer /></body></html>;
+  return <html lang="en"><body><a className="skip-link" href="#main">Skip to content</a><Header />{children}<div className="mobile-contact-actions" aria-label="Quick contact"><a href="tel:+2347084207100">Call</a><a href="https://wa.me/2347084207100" target="_blank" rel="noreferrer">WhatsApp</a></div><Footer /></body></html>;
 }
