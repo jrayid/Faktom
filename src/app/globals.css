@@ -1490,6 +1490,8 @@ button:disabled {
 .project-photo {
   aspect-ratio: 16 / 10;
   min-height: 190px;
+  position: relative;
+  overflow: hidden;
   display: grid;
   place-items: center;
   background: var(--surface-placeholder);
@@ -1497,6 +1499,9 @@ button:disabled {
   color: #617077;
   font-size: 11px;
   letter-spacing: 2px;
+}
+.project-photo-image {
+  object-fit: cover;
 }
 .project-photo:hover {
   color: var(--navy);
@@ -1616,12 +1621,17 @@ button:disabled {
 }
 .leader-photo {
   aspect-ratio: 4/3;
+  position: relative;
+  overflow: hidden;
   background: #e9ece9;
   display: grid;
   place-items: center;
   color: #617077;
   font-size: 11px;
   letter-spacing: 2px;
+}
+.leader-photo-image {
+  object-fit: cover;
 }
 .leader-card h3 {
   font: 19px var(--font-display);

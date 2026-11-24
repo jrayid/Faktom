@@ -4,12 +4,14 @@ import { FormEvent, useState } from "react";
 import { quoteSchema } from "@/lib/schemas";
 import { useContactSubmission } from "@/components/useContactSubmission";
 import { services } from "@/data/services";
+import TurnstileWidget from "@/components/TurnstileWidget";
 
 const states = ["Rivers", "Cross River", "Bayelsa", "Imo", "Abia", "Akwa Ibom", "Enugu", "Other"];
-const initial = { fullName: "", phone: "", email: "", state: "", serviceType: "", siteAddress: "", message: "", consent: false, website: "" };
+const initial = { fullName: "", phone: "", email: "", state: "", serviceType: "", siteAddress: "", message: "", consent: false, website: "", turnstileToken: "" };
 
 export default function QuoteForm() {
   const [values, setValues] = useState(initial);
+  const [turnstileResetKey, setTurnstileResetKey] = useState(0);
   const { errors, status, busy, send, clearField } = useContactSubmission("/api/quote", quoteSchema, "Thank you. Your quote request has been received.");
 
   function update(field: keyof typeof initial, value: string | boolean) {
@@ -19,7 +21,10 @@ export default function QuoteForm() {
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (await send(values)) setValues(initial);
+    const succeeded = await send(values);
+    if (values.turnstileToken) setTurnstileResetKey((current) => current + 1);
+    if (succeeded) setValues(initial);
+    else if (values.turnstileToken) setValues((current) => ({ ...current, turnstileToken: "" }));
   }
 
   const error = (field: keyof typeof initial) => errors[field] ? <span className="field-error" id={`quote-${field}-error`}>{errors[field]}</span> : null;
@@ -36,6 +41,7 @@ export default function QuoteForm() {
       <div className="form-field"><label htmlFor="quote-siteAddress">Site address</label><input id="quote-siteAddress" autoComplete="street-address" required value={values.siteAddress} onChange={(event) => update("siteAddress", event.target.value)} aria-invalid={!!errors.siteAddress} aria-describedby={described("siteAddress")} />{error("siteAddress")}</div>
       <div className="form-field form-field-wide"><label htmlFor="quote-message">Message</label><textarea id="quote-message" rows={5} required value={values.message} onChange={(event) => update("message", event.target.value)} aria-invalid={!!errors.message} aria-describedby={described("message")} />{error("message")}</div>
       <div className="form-field form-field-wide"><label className="consent-label"><input id="quote-consent" type="checkbox" required checked={values.consent} onChange={(event) => update("consent", event.target.checked)} aria-invalid={!!errors.consent} aria-describedby={described("consent")} /> <span>I agree to be contacted about this request.</span></label>{error("consent")}</div>
+      <TurnstileWidget resetKey={turnstileResetKey} onToken={(token) => update("turnstileToken", token)} />
     </div>
     <p className="form-privacy">We’ll use your details to review and respond to this quote request. See our <a href="/privacy">privacy notice</a>.</p>
     <div className="form-submit-row"><button className="button button-amber" type="submit" disabled={busy}>{busy ? "Sending…" : "Send quote request"} <span aria-hidden="true">→</span></button><p className="form-status" role="status" aria-live="polite">{status}</p></div>

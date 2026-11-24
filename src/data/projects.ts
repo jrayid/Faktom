@@ -7,7 +7,7 @@ export type Project = {
   states: string[];
   services: string[];
   summary: string;
-  photos: string[];
+  photos: { src: string; alt: string }[];
 };
 
 export const projects: Project[] = [

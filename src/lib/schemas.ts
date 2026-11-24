@@ -19,6 +19,7 @@ export const quoteSchema = z.object({
   message: requiredText("Message", 3000),
   consent: z.literal(true, { error: "Please agree to be contacted about this request." }),
   website: z.string().max(200).optional(),
+  turnstileToken: z.string().max(2048).optional(),
 });
 
 export const vendorSchema = z.object({
@@ -32,6 +33,7 @@ export const vendorSchema = z.object({
   message: requiredText("Message", 3000),
   consent: z.literal(true, { error: "Please agree to be contacted about this enquiry." }),
   website: z.string().max(200).optional(),
+  turnstileToken: z.string().max(2048).optional(),
 });
 
 export type QuoteSubmission = z.infer<typeof quoteSchema>;

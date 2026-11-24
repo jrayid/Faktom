@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import ProjectPhotoImage from "@/components/ProjectPhotoImage";
 import type { Project } from "@/data/projects";
 import { services } from "@/data/services";
 
@@ -18,7 +19,9 @@ export default function ProjectGrid({ projects }: { projects: Project[] }) {
       <p aria-live="polite">{filtered.length} {filtered.length === 1 ? "project" : "projects"}</p>
     </div>
     <div className="project-cards">{filtered.map((project) => <article className="project-card" key={project.slug}>
-      <Link className="project-photo" href={`/projects/${project.slug}`} aria-label={`${project.title} project details`}><span>[PHOTO]</span></Link>
+      <Link className="project-photo" href={`/projects/${project.slug}`} aria-label={`${project.title} project details`}>
+        {project.photos[0] ? <ProjectPhotoImage photo={project.photos[0]} fallbackAlt={`${project.title} project photograph`} sizes="(max-width: 760px) 100vw, (max-width: 1000px) 50vw, 33vw" /> : <span>[PHOTO]</span>}
+      </Link>
       <div className="project-card-copy"><p className="project-card-meta">{project.client} <span>·</span> {project.year}</p><h2><Link href={`/projects/${project.slug}`}>{project.title}</Link></h2><p className="project-card-location">{project.location}</p><p className="project-card-summary">{project.summary}</p><Link className="project-detail-link" href={`/projects/${project.slug}`}>View project <span aria-hidden="true">→</span></Link></div>
     </article>)}</div>
     {filtered.length === 0 && <p className="empty-projects">No projects match these filters.</p>}

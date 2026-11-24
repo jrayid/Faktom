@@ -1,3 +1,4 @@
+import OfficeMapLinks from "@/components/OfficeMapLinks";
 import { BreadcrumbJsonLd } from "@/components/StructuredData";
 import { pageMetadata } from "@/lib/site";
 import { company } from "@/data/company";
@@ -16,6 +17,6 @@ export default function ContactPage() {
 
     <section className="contact-details-section"><div className="container"><div className="section-heading"><div><p className="eyebrow">Reach our team</p><h2>Our offices &<br/><em>contact details.</em></h2></div><p className="section-intro">Call or email us about a project, service or vendor enquiry.</p></div><div className="contact-office-grid">{company.offices.map((office) => <article className="contact-office-card" key={office.city}><p className="office-state">{office.state}</p><h3>{office.city}</h3>{office.addresses.map((address) => <p className="office-address" key={address}>{address}</p>)}<div className="office-links">{office.phones.map((phone) => <a href={`tel:+234${phone.slice(1)}`} key={phone}>{phone}</a>)}</div></article>)}<article className="contact-office-card contact-direct-card"><p className="office-state">Email & messaging</p><h3>Contact Fakom</h3><div className="office-links"><a href={`mailto:${company.email}`}>{company.email}</a><a href="https://wa.me/2347084207100" target="_blank" rel="noreferrer">WhatsApp <span className="confirm-whatsapp">[CONFIRM WHATSAPP NUMBER]</span></a></div></article></div></div></section>
 
-    <section className="contact-map-section"><div className="container"><p className="eyebrow">Office locations</p><div className="map-placeholder" role="img" aria-label="Map placeholder"><span>[MAP]</span></div></div></section>
+    <section className="contact-map-section"><div className="container"><p className="eyebrow">Office locations</p><OfficeMapLinks /></div></section>
   </main>;
 }

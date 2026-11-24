@@ -3,12 +3,14 @@
 import { FormEvent, useState } from "react";
 import { vendorSchema } from "@/lib/schemas";
 import { useContactSubmission } from "@/components/useContactSubmission";
+import TurnstileWidget from "@/components/TurnstileWidget";
 
 const interests = ["Preventive maintenance", "Corrective maintenance", "Transformer installation", "Meter and DISCO coordination", "Other"];
-const initial = { companyName: "", contactPerson: "", role: "", phone: "", email: "", interests: [] as string[], regions: "", message: "", consent: false, website: "" };
+const initial = { companyName: "", contactPerson: "", role: "", phone: "", email: "", interests: [] as string[], regions: "", message: "", consent: false, website: "", turnstileToken: "" };
 
 export default function VendorForm() {
   const [values, setValues] = useState(initial);
+  const [turnstileResetKey, setTurnstileResetKey] = useState(0);
   const { errors, status, busy, send, clearField } = useContactSubmission("/api/vendor", vendorSchema, "Thank you. Your vendor enquiry has been received.");
 
   function update(field: keyof typeof initial, value: string | boolean | string[]) {
@@ -22,7 +24,10 @@ export default function VendorForm() {
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (await send(values)) setValues(initial);
+    const succeeded = await send(values);
+    if (values.turnstileToken) setTurnstileResetKey((current) => current + 1);
+    if (succeeded) setValues(initial);
+    else if (values.turnstileToken) setValues((current) => ({ ...current, turnstileToken: "" }));
   }
 
   const error = (field: keyof typeof initial) => errors[field] ? <span className="field-error" id={`vendor-${field}-error`}>{errors[field]}</span> : null;
@@ -40,6 +45,7 @@ export default function VendorForm() {
       <div className="form-field form-field-wide"><label htmlFor="vendor-regions">Regions of interest</label><input id="vendor-regions" required value={values.regions} onChange={(event) => update("regions", event.target.value)} aria-invalid={!!errors.regions} aria-describedby={described("regions")} />{error("regions")}</div>
       <div className="form-field form-field-wide"><label htmlFor="vendor-message">Message</label><textarea id="vendor-message" rows={5} required value={values.message} onChange={(event) => update("message", event.target.value)} aria-invalid={!!errors.message} aria-describedby={described("message")} />{error("message")}</div>
       <div className="form-field form-field-wide"><label className="consent-label"><input id="vendor-consent" type="checkbox" required checked={values.consent} onChange={(event) => update("consent", event.target.checked)} aria-invalid={!!errors.consent} aria-describedby={described("consent")} /> <span>I agree to be contacted about this enquiry.</span></label>{error("consent")}</div>
+      <TurnstileWidget resetKey={turnstileResetKey} onToken={(token) => update("turnstileToken", token)} />
     </div>
     <p className="form-privacy">We’ll use your details to review and respond to this vendor enquiry. See our <a href="/privacy">privacy notice</a>.</p>
     <div className="form-submit-row"><button className="button button-amber" type="submit" disabled={busy}>{busy ? "Sending…" : "Send vendor enquiry"} <span aria-hidden="true">→</span></button><p className="form-status" role="status" aria-live="polite">{status}</p></div>

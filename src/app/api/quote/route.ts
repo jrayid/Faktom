@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
 import { quoteSchema } from "@/lib/schemas";
-import { allowedRequest, readJsonBody, requestIp, saveSubmission, sendSubmissionEmails } from "@/lib/submission";
+import { allowedRequest, processSubmission, readJsonBody, requestIp, verifyTurnstile } from "@/lib/submission";
 
 export async function POST(request: Request) {
-  const isLimited = !allowedRequest(requestIp(request));
+  const clientIp = requestIp(request);
+  const isLimited = !allowedRequest(clientIp);
   let body: unknown;
   try {
     body = await readJsonBody(request);
@@ -20,9 +21,17 @@ export async function POST(request: Request) {
   const parsed = quoteSchema.safeParse(body);
   if (!parsed.success) return NextResponse.json({ error: "Please check the form fields.", issues: parsed.error.flatten().fieldErrors }, { status: 400 });
 
+  if (!await verifyTurnstile(parsed.data.turnstileToken, clientIp)) {
+    return NextResponse.json({ error: "Please complete the security check and submit the form again." }, { status: 400 });
+  }
+
   try {
-    await saveSubmission("quote", parsed.data);
-    await sendSubmissionEmails("quote", parsed.data, parsed.data.email);
+    const submissionData = { ...parsed.data };
+    delete submissionData.turnstileToken;
+    const succeeded = await processSubmission("quote", submissionData, parsed.data.email);
+    if (!succeeded) {
+      return NextResponse.json({ error: "We could not process your request just now. Please try again shortly." }, { status: 500 });
+    }
     return NextResponse.json({ ok: true });
   } catch (error) {
     console.error("Quote submission processing failed", error);
