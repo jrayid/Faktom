@@ -3,7 +3,7 @@ import { services } from "@/data/home";
 import { projects } from "@/data/projects";
 
 export default function Home() {
-  return <main id="main">
+  return <main id="main" tabIndex={-1}>
     <section className="hero">
       <div className="container hero-grid">
         <div className="hero-copy">
@@ -27,7 +27,7 @@ export default function Home() {
       <div className="service-grid">{services.map((service, index) => <article className="service-card" key={service.title}><div className="service-top"><span>0{index + 1}</span><span className="service-arrow" aria-hidden="true">↗</span></div><h3>{service.title}</h3><p>{service.description}</p><Link href="/contact#quote" aria-label={`Enquire about ${service.title}`}>Enquire <span aria-hidden="true">→</span></Link></article>)}</div>
     </div></section>
 
-    <section className="footprint"><div className="container footprint-grid"><div><p className="eyebrow eyebrow-light">Our footprint</p><h2>Rooted in the<br /><em>South-South.</em></h2></div><div className="footprint-copy"><p>Based in Port Harcourt and Owerri, we work across Rivers, Bayelsa and Cross River, with a history of projects across the South-East and Akwa Ibom.</p><div className="office-list"><div><span className="office-dot" />Port Harcourt, Rivers</div><div><span className="office-dot" />Owerri, Imo</div></div><Link className="light-link" href="/contact#quote">Talk to our team <span aria-hidden="true">→</span></Link></div><div className="map-mark" aria-hidden="true"><span>NG</span><div className="map-ring ring-one"/><div className="map-ring ring-two"/><div className="map-ring ring-three"/><div className="map-center"/></div></div></section>
+    <section className="footprint"><div className="container footprint-grid"><div className="footprint-heading"><p className="eyebrow eyebrow-light">Our footprint</p><h2>Rooted in the<br /><em>South-South.</em></h2></div><div className="footprint-copy"><p>Based in Port Harcourt and Owerri, we work across Rivers, Bayelsa and Cross River, with a history of projects across the South-East and Akwa Ibom.</p><div className="office-list"><div><span className="office-dot" />Port Harcourt, Rivers</div><div><span className="office-dot" />Owerri, Imo</div></div><Link className="light-link" href="/contact#quote">Talk to our team <span aria-hidden="true">→</span></Link></div><div className="map-mark" aria-hidden="true"><span>NG</span><div className="map-ring ring-one"/><div className="map-ring ring-two"/><div className="map-ring ring-three"/><div className="map-center"/></div></div></section>
 
     <section className="section projects-section"><div className="container"><div className="section-heading"><div><p className="eyebrow">Selected experience</p><h2>Work that keeps<br /><em>things moving.</em></h2></div><p className="section-intro">A track record in high-tension relocation, telecom infrastructure and transformer work.</p></div><div className="project-list">{projects.map((project, index) => <article className="project-row" key={project.title}><span className="project-number">0{index + 1}</span><div><h3>{project.title}</h3><p>{project.client} <span>·</span> {project.location}</p></div><span className="project-year">{project.year}</span></article>)}</div></div></section>
 

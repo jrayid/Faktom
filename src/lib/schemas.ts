@@ -1,10 +1,10 @@
 import { z } from "zod";
 import { services } from "@/data/services";
 
-const phoneSchema = z.string().trim().regex(
+const phoneSchema = z.string().trim().transform((value) => value.replace(/[\s()-]/g, "")).pipe(z.string().regex(
   /^(?:0[789]\d{9}|\+234[789]\d{9})$/,
   "Enter a Nigerian mobile number, for example 08012345678 or +2348012345678.",
-);
+));
 const emailSchema = z.string().trim().email("Enter a valid email address.").max(254);
 const requiredText = (label: string, max = 300) => z.string().trim().min(2, `${label} is required.`).max(max, `${label} is too long.`);
 const serviceSlugs = services.map((service) => service.slug) as [string, ...string[]];

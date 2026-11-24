@@ -5,8 +5,44 @@ import { Resend } from "resend";
 const windowMs = 10 * 60 * 1000;
 const requestLimit = 5;
 const attempts = new Map<string, { count: number; resetAt: number }>();
+let cleanupTick = 0;
+
+export async function readJsonBody(request: Request, maxBytes = 16 * 1024): Promise<unknown> {
+  const length = Number(request.headers.get("content-length") || 0);
+  if (length > maxBytes) throw new Error("request_too_large");
+  if (!request.body) throw new Error("invalid_json");
+
+  const reader = request.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let total = 0;
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      total += value.byteLength;
+      if (total > maxBytes) {
+        await reader.cancel();
+        throw new Error("request_too_large");
+      }
+      chunks.push(value);
+    }
+  } finally {
+    reader.releaseLock();
+  }
+  const bytes = new Uint8Array(total);
+  let offset = 0;
+  for (const chunk of chunks) {
+    bytes.set(chunk, offset);
+    offset += chunk.byteLength;
+  }
+  return JSON.parse(new TextDecoder().decode(bytes));
+}
 
 export function allowedRequest(ip: string, now = Date.now()) {
+  if (++cleanupTick % 100 === 0 || attempts.size > 5000) {
+    for (const [key, entry] of attempts) if (entry.resetAt <= now) attempts.delete(key);
+    while (attempts.size > 5000) attempts.delete(attempts.keys().next().value!);
+  }
   const current = attempts.get(ip);
   if (!current || current.resetAt <= now) {
     attempts.set(ip, { count: 1, resetAt: now + windowMs });
@@ -18,10 +54,19 @@ export function allowedRequest(ip: string, now = Date.now()) {
 }
 
 export async function saveSubmission(type: "quote" | "vendor", data: unknown) {
-  const directory = path.join(process.cwd(), "data");
-  await mkdir(directory, { recursive: true });
-  // Local JSONL storage is for development; production should use a database.
-  await appendFile(path.join(directory, "submissions.jsonl"), `${JSON.stringify({ type, receivedAt: new Date().toISOString(), data })}\n`, "utf8");
+  const productionPath = process.env.CONTACT_SUBMISSIONS_PATH;
+  if (process.env.NODE_ENV === "production" && !productionPath) {
+    throw new Error("CONTACT_SUBMISSIONS_PATH must point to durable writable storage in production");
+  }
+  if (process.env.NODE_ENV === "production" && productionPath && !path.isAbsolute(productionPath)) {
+    throw new Error("CONTACT_SUBMISSIONS_PATH must be an absolute path to a durable volume");
+  }
+  const filePath = productionPath
+    ? path.resolve(productionPath)
+    : path.join(process.cwd(), "data", "submissions.jsonl");
+  await mkdir(path.dirname(filePath), { recursive: true });
+  // JSONL is for local development or an explicitly mounted durable volume; a database is preferred for multi-instance production.
+  await appendFile(filePath, `${JSON.stringify({ type, receivedAt: new Date().toISOString(), data })}\n`, "utf8");
 }
 
 function escapeHtml(value: unknown): string {
@@ -45,7 +90,8 @@ export async function sendSubmissionEmails(type: "quote" | "vendor", data: Recor
   const replyHtml = `<p>Thank you for contacting Fakom International Services Ltd. We’ve received your ${type === "quote" ? "quote request" : "vendor enquiry"}.</p><p>This is an acknowledgement of receipt.</p>`;
 
   if (!apiKey || !to || !from) {
-    console.info(`[EMAIL TEST MODE] ${subject} to ${to || "[CONTACT_TO_EMAIL not set]"}`, { data, visitorEmail, replyHtml });
+    if (process.env.NODE_ENV === "production") throw new Error("Resend contact email configuration is incomplete");
+    console.info(`[EMAIL TEST MODE] ${subject}; visitor ${visitorEmail}; submission saved locally`);
     return;
   }
 
@@ -53,11 +99,12 @@ export async function sendSubmissionEmails(type: "quote" | "vendor", data: Recor
   const teamResult = await resend.emails.send({ from, to, replyTo: visitorEmail, subject, html });
   if (teamResult.error) throw teamResult.error;
   const replyResult = await resend.emails.send({ from, to: visitorEmail, subject: "We received your message", html: replyHtml });
-  if (replyResult.error) throw replyResult.error;
+  if (replyResult.error) console.error("Visitor acknowledgement could not be sent", replyResult.error);
 }
 
 export function requestIp(request: Request) {
-  return request.headers.get("x-forwarded-for")?.split(",")[0]?.trim()
-    || request.headers.get("x-real-ip")
-    || "unknown";
+  // Configure this to a header overwritten by the trusted reverse proxy; never use a client-controlled forwarding header.
+  const trustedHeader = process.env.CLIENT_IP_HEADER || "x-real-ip";
+  const address = request.headers.get(trustedHeader)?.split(",").at(-1)?.trim();
+  return address || "unknown";
 }

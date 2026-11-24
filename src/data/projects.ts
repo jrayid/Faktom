@@ -17,7 +17,8 @@ export const projects: Project[] = [
     client: "Julius Berger",
     year: "2008",
     location: "Onitsha-Owerri expressway",
-    states: ["Imo"],
+    // Route is known; the exact worksite state has not been confirmed.
+    states: [],
     services: ["high-tension-work"],
     summary: "Fakom relocated a high-tension line on the Onitsha-Owerri expressway for Julius Berger. Exact dates, line details and project capacity: [TO CONFIRM].",
     photos: [],
