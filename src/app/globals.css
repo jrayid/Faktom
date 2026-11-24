@@ -51,6 +51,7 @@ body {
   color: var(--ink);
   font-family: var(--font-body);
   font-size: 16px;
+  color-scheme: dark;
   -webkit-font-smoothing: antialiased;
 }
 a {
@@ -65,9 +66,10 @@ a {
   position: absolute;
   left: 12px;
   top: -60px;
-  background: white;
-  color: var(--navy);
+  background: var(--surface-raised);
+  color: var(--ink);
   padding: 12px;
+  border: 1px solid var(--amber);
   z-index: 20;
 }
 .skip-link:focus {
@@ -93,7 +95,7 @@ a {
 .site-header {
   height: 82px;
   background: var(--paper);
-  border-bottom: 1px solid rgba(16,43,58,.1);
+  border-bottom: 1px solid var(--line);
   box-shadow: var(--shadow-header);
   position: sticky;
   top: 0;
@@ -115,7 +117,7 @@ a {
   font-size: 39px;
   font-weight: 700;
   line-height: 1;
-  color: var(--navy);
+  color: var(--ink);
   letter-spacing: -5px;
 }
 .brand-symbol span {
@@ -125,7 +127,7 @@ a {
   font-size: 11px;
   letter-spacing: 1.15px;
   font-weight: 800;
-  color: var(--navy);
+  color: var(--ink);
 }
 .brand-name span {
   display: block;
@@ -133,31 +135,42 @@ a {
   letter-spacing: 1.4px;
   font-weight: 500;
   margin-top: 5px;
-  color: #68767d;
+  color: var(--muted);
 }
 .nav {
   display: flex;
   align-items: center;
   gap: 18px;
   font-size: 12px;
-  color: #43545c;
+  color: var(--ink);
 }
-.nav a:hover {
+.nav a:hover,
+.nav a[aria-current="page"] {
   color: var(--amber-ink);
+}
+.nav a:not(.nav-contact)[aria-current="page"] {
+  text-decoration: underline;
+  text-decoration-color: var(--amber);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 10px;
 }
 .text-link:hover, .light-link:hover {
   color: var(--amber-light);
 }
 .nav-contact {
-  padding: 13px 17px;
-  border: 1px solid #b7c0c1;
-  color: var(--navy);
+  min-height: 44px;
+  padding: 0 17px;
+  border: 1px solid var(--amber);
+  background: var(--amber);
+  color: var(--navy-deep);
 }
 .nav a.nav-contact:hover {
   color: var(--navy-deep);
+  background: var(--amber-light);
+  border-color: var(--amber-light);
 }
 .nav-contact span {
-  color: var(--amber-ink);
+  color: var(--navy-deep);
   margin-left: 12px;
 }
 .menu-toggle {
@@ -262,9 +275,9 @@ button:disabled {
   z-index: 1;
 }
 .button-outline:hover {
-  background: #fff;
-  border-color: #fff;
-  color: var(--navy);
+  background: var(--amber);
+  border-color: var(--amber);
+  color: var(--navy-deep);
 }
 .text-link {
   font-size: 12px;
@@ -289,7 +302,13 @@ button:disabled {
 }
 .hero-visual {
   height: 380px;
-  background: #193848;
+  background-color: var(--surface-muted);
+  background-image:
+    radial-gradient(ellipse at 72% 78%, rgba(245, 166, 35, 0.12), transparent 42%),
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: auto, 42px 42px, 42px 42px;
+  border: 1px solid var(--line);
   position: relative;
   display: grid;
   place-items: center;
@@ -373,7 +392,7 @@ button:disabled {
 }
 .hero-bottom-right {
   margin-left: auto;
-  color: #f0bd55;
+  color: var(--amber-light);
 }
 .section {
   padding: var(--space-section) 0;
@@ -388,7 +407,7 @@ button:disabled {
 .section h2, .footprint h2 {
   font-size: 48px;
   line-height: 1.08;
-  color: var(--navy);
+  color: var(--ink);
   margin: 0;
 }
 .section-intro {
@@ -428,7 +447,7 @@ button:disabled {
 }
 .service-card h3 {
   font: 24px var(--font-display);
-  color: var(--navy);
+  color: var(--ink);
   margin: 28px 0 12px;
 }
 .service-card p {
@@ -441,7 +460,7 @@ button:disabled {
 .service-card>a {
   font-size: 11px;
   font-weight: 700;
-  color: var(--navy);
+  color: var(--ink);
 }
 .service-card>a span {
   color: var(--amber-ink);
@@ -548,7 +567,7 @@ button:disabled {
 }
 .project-row h3 {
   font: 21px var(--font-display);
-  color: var(--navy);
+  color: var(--ink);
   margin: 0 0 6px;
 }
 .project-row p {
@@ -565,9 +584,11 @@ button:disabled {
   color: #64737a;
 }
 .cta-band {
-  background: #142f3d;
+  background: var(--surface-muted);
   color: white;
   padding: 53px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
 .cta-inner {
   display: flex;
@@ -589,16 +610,17 @@ button:disabled {
 }
 .button-outline {
   color: white;
-  border: 1px solid #819096;
+  border: 1px solid var(--line-strong);
 }
 .button-outline span {
   color: var(--amber);
 }
 /* Shared footer */
 .site-footer {
-  background: #091c26;
+  background: #0b0d0f;
   color: white;
   padding: 39px 0 18px;
+  border-top: 1px solid var(--line);
 }
 .footer-main {
   display: grid;
@@ -614,19 +636,19 @@ button:disabled {
   color: white;
 }
 .footer-brand .brand-name span {
-  color: #91a0a5;
+  color: var(--muted);
 }
 .footer-main>p {
   font-size: 12px;
   line-height: 1.7;
-  color: #aab8bc;
+  color: var(--muted);
   margin: 4px 0;
 }
 .footer-contact {
   display: grid;
   gap: 10px;
   font-size: 11px;
-  color: #d7e0e2;
+  color: var(--ink);
 }
 .footer-contact a:hover {
   color: var(--amber);
@@ -636,7 +658,7 @@ button:disabled {
   padding-top: 15px;
   display: flex;
   justify-content: space-between;
-  color: #7f9198;
+  color: var(--muted);
   font-size: 10px;
 }
 @media(max-width: 760px) {
@@ -653,8 +675,8 @@ button:disabled {
   .menu-toggle {
     height: 42px;
     width: 42px;
-    border: 1px solid #d4dbd9;
-    background: transparent;
+    border: 1px solid var(--line-strong);
+    background: var(--surface-muted);
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -664,7 +686,7 @@ button:disabled {
   .menu-toggle>span:not(.sr-only) {
     height: 1px;
     width: 18px;
-    background: var(--navy);
+    background: var(--ink);
   }
   .nav {
     display: none;
@@ -929,7 +951,7 @@ button:disabled {
 }
 .catalog-intro h2, .two-col-section h2, .scope-section h2, .escalation-section h2, .capacity-grid h2, .reporting-section h2 {
   font: 400 44px/1.08 var(--font-display);
-  color: var(--navy);
+  color: var(--ink);
   letter-spacing: -1px;
   margin: 0;
 }
@@ -979,7 +1001,7 @@ button:disabled {
 .catalog-card:focus-visible .catalog-icon {
   color: white;
   background: var(--navy);
-  border-color: var(--navy);
+  border-color: var(--ink);
 }
 .catalog-count {
   position: absolute;
@@ -990,7 +1012,7 @@ button:disabled {
 }
 .catalog-card h3 {
   font: 22px var(--font-display);
-  color: var(--navy);
+  color: var(--ink);
   margin: 18px 0 9px;
 }
 .catalog-card p {
@@ -1003,7 +1025,7 @@ button:disabled {
   margin-top: auto;
   font-size: 11px;
   font-weight: 700;
-  color: var(--navy);
+  color: var(--ink);
 }
 .catalog-link span {
   color: var(--amber-ink);
@@ -1031,7 +1053,7 @@ button:disabled {
 }
 .detail-copy h2 {
   font: 400 29px var(--font-display);
-  color: var(--navy);
+  color: var(--ink);
   margin: 0 0 12px;
 }
 .detail-copy>p, .detail-copy li {
@@ -1112,7 +1134,7 @@ button:disabled {
 }
 .scope-card h3 {
   font: 20px var(--font-display);
-  color: var(--navy);
+  color: var(--ink);
   margin: 25px 0 9px;
 }
 .scope-card p {
@@ -1173,7 +1195,7 @@ button:disabled {
 }
 .flow-step h3 {
   font: 20px var(--font-display);
-  color: var(--navy);
+  color: var(--ink);
   margin: 25px 0 9px;
 }
 .flow-step p {
@@ -1240,7 +1262,7 @@ button:disabled {
 }
 .service-levels h3 {
   font: 20px var(--font-display);
-  color: var(--navy);
+  color: var(--ink);
   margin: 0;
   padding: 17px 0;
 }
@@ -1265,7 +1287,7 @@ button:disabled {
   gap: 12px 22px;
   align-content: start;
   font-size: 11px;
-  color: #d7e0e2;
+  color: var(--muted);
 }
 .footer-nav a:hover {
   color: var(--amber);
@@ -1434,7 +1456,7 @@ button:disabled {
 .directory-heading {
   font: 400 42px/1.1 var(--font-display);
   letter-spacing: -1px;
-  color: var(--navy);
+  color: var(--ink);
   margin: 0 0 27px;
 }
 .projects-directory {
@@ -1453,7 +1475,7 @@ button:disabled {
   gap: 7px;
   font-size: 11px;
   font-weight: 700;
-  color: var(--navy);
+  color: var(--ink);
 }
 .project-filters select {
   min-width: 200px;
@@ -1504,7 +1526,7 @@ button:disabled {
   object-fit: cover;
 }
 .project-photo:hover {
-  color: var(--navy);
+  color: var(--ink);
 }
 .project-card-copy {
   padding: 19px;
@@ -1523,7 +1545,7 @@ button:disabled {
 }
 .project-card h2 {
   font: 21px/1.25 var(--font-display);
-  color: var(--navy);
+  color: var(--ink);
   margin: 0 0 8px;
 }
 .project-card-location {
@@ -1540,7 +1562,7 @@ button:disabled {
 .project-detail-link {
   font-size: 11px;
   font-weight: 700;
-  color: var(--navy);
+  color: var(--ink);
   margin-top: auto;
 }
 .project-detail-link span {
@@ -1564,7 +1586,7 @@ button:disabled {
 }
 .project-detail-layout h2 {
   font: 32px var(--font-display);
-  color: var(--navy);
+  color: var(--ink);
   margin: 0 0 15px;
 }
 .project-summary {
@@ -1593,13 +1615,13 @@ button:disabled {
 }
 .project-detail-layout h3 {
   font: 20px var(--font-display);
-  color: var(--navy);
+  color: var(--ink);
 }
 .project-service-list {
   padding-left: 19px;
   font-size: 13px;
   line-height: 2;
-  color: var(--navy);
+  color: var(--ink);
 }
 .project-service-list a {
   text-decoration: underline;
@@ -1635,7 +1657,7 @@ button:disabled {
 }
 .leader-card h3 {
   font: 19px var(--font-display);
-  color: var(--navy);
+  color: var(--ink);
   margin: 16px 17px 5px;
 }
 .leader-card>p {
@@ -1654,7 +1676,7 @@ button:disabled {
 }
 .technicians-layout h2 {
   font: 400 40px var(--font-display);
-  color: var(--navy);
+  color: var(--ink);
   margin: 0;
 }
 .technician-list {
@@ -1695,7 +1717,7 @@ button:disabled {
 }
 .equipment-card h3 {
   font: 21px var(--font-display);
-  color: var(--navy);
+  color: var(--ink);
   margin: 15px 0 0;
 }
 .hse-section {
@@ -1741,7 +1763,7 @@ button:disabled {
 }
 .state-groups h3 {
   font: 20px var(--font-display);
-  color: var(--navy);
+  color: var(--ink);
   margin: 0 0 17px;
 }
 .state-groups ul {
@@ -1781,7 +1803,7 @@ button:disabled {
 }
 .office-card h3 {
   font: 26px var(--font-display);
-  color: var(--navy);
+  color: var(--ink);
   margin: 0 0 13px;
 }
 .office-address {
@@ -1797,7 +1819,7 @@ button:disabled {
   margin-top: 19px;
   padding-top: 15px;
   font-size: 12px;
-  color: var(--navy);
+  color: var(--ink);
 }
 .office-links a {
   text-decoration: underline;
@@ -1850,7 +1872,7 @@ button:disabled {
 .purpose-grid h2 {
   font: 24px/1.5 var(--font-display);
   font-weight: 400;
-  color: var(--navy);
+  color: var(--ink);
   margin: 0;
 }
 .about-context {
@@ -1876,7 +1898,7 @@ button:disabled {
 }
 .about-cta h2 {
   font: 400 40px/1.1 var(--font-display);
-  color: var(--navy);
+  color: var(--ink);
   margin: 0;
 }
 .about-cta h2 em {
@@ -2030,7 +2052,7 @@ button:disabled {
 }
 .contact-form-intro h2 {
   font: 400 39px/1.12 var(--font-display);
-  color: var(--navy);
+  color: var(--ink);
   margin: 0 0 14px;
 }
 .contact-form-description {
@@ -2064,7 +2086,7 @@ button:disabled {
 .form-field>label, .form-field legend {
   font-size: 12px;
   font-weight: 700;
-  color: var(--navy);
+  color: var(--ink);
 }
 .form-field input:not([type=checkbox]), .form-field select, .form-field textarea {
   width: 100%;
@@ -2102,7 +2124,7 @@ button:disabled {
 .consent-label input, .interest-option input {
   width: 18px;
   height: 18px;
-  accent-color: var(--navy);
+  accent-color: var(--ink);
   flex: 0 0 auto;
   margin: 0;
 }
@@ -2152,7 +2174,7 @@ button:disabled {
 .form-status {
   font-size: 12px;
   line-height: 1.5;
-  color: var(--navy);
+  color: var(--ink);
   margin: 0;
 }
 .honeypot {
@@ -2179,7 +2201,7 @@ button:disabled {
 }
 .contact-office-card h3 {
   font: 23px var(--font-display);
-  color: var(--navy);
+  color: var(--ink);
   margin: 0 0 11px;
 }
 .contact-office-card .office-links {
@@ -2203,7 +2225,7 @@ button:disabled {
 }
 .privacy-copy h2 {
   font: 23px var(--font-display);
-  color: var(--navy);
+  color: var(--ink);
   margin: 27px 0 8px;
 }
 .privacy-copy p {
@@ -2238,17 +2260,17 @@ button:disabled {
     gap: 5px;
     width: 42px;
     height: 42px;
-    border: 1px solid #d4dbd9;
-    background: transparent;
+    border: 1px solid var(--line-strong);
+    background: var(--surface-muted);
     cursor: pointer;
   }
   .menu-toggle:hover {
-    background: #eeefea;
+    background: var(--surface-raised);
   }
   .menu-toggle > span:not(.sr-only) {
     width: 18px;
     height: 1px;
-    background: var(--navy);
+    background: var(--ink);
     transition: transform var(--motion-fast) var(--motion-easing);
   }
   .menu-toggle[aria-expanded="true"] > span:nth-last-child(2) {
@@ -2336,7 +2358,7 @@ button:disabled {
   }
   .mobile-contact-actions a+a {
     background: #fff;
-    color: var(--navy);
+    color: var(--ink);
   }
   body {
     padding-bottom: calc(60px + env(safe-area-inset-bottom));
