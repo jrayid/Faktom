@@ -1,4 +1,6 @@
 export const company = {
+  foundingDate: "2005",
+  country: "Nigeria",
   email: "fakomintlservicesltd@gmail.com",
   phones: ["07084207100", "08033171501", "08033386005"],
   offices: [

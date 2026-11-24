@@ -1,15 +1,13 @@
-import type { Metadata } from "next";
+import { BreadcrumbJsonLd } from "@/components/StructuredData";
+import { pageMetadata } from "@/lib/site";
 import { company } from "@/data/company";
 import QuoteForm from "@/components/QuoteForm";
 import VendorForm from "@/components/VendorForm";
 
-export const metadata: Metadata = {
-  title: "Contact Fakom | Request a Quote or Vendor Enquiry",
-  description: "Contact Fakom International Services Ltd for an electrical work quote or vendor enquiry.",
-};
+export const metadata = pageMetadata('Contact', 'Contact Fakom for an electrical work quote or a vendor enquiry.', '/contact');
 
 export default function ContactPage() {
-  return <main id="main" tabIndex={-1}>
+  return <main id="main" tabIndex={-1}><BreadcrumbJsonLd items={[{ name: "Home", pathname: "/" }, { name: 'Contact', pathname: '/contact' }]} />
     <section className="inner-hero"><div className="container inner-hero-content"><p className="eyebrow"><span className="eyebrow-line"/> Contact Fakom</p><h1>Let’s talk about<br/><em>your requirements.</em></h1><p className="inner-hero-lede">Share your project details or vendor enquiry with our team. We’ll use the information to review and respond to your request.</p><div className="contact-jump-links"><a className="button button-amber" href="#quote">Request a Quote <span aria-hidden="true">↓</span></a><a className="button button-outline" href="#vendor">Vendor Enquiry <span aria-hidden="true">↓</span></a></div></div></section>
 
     <section className="contact-form-section" id="quote"><div className="container contact-layout"><div className="contact-form-intro"><p className="eyebrow">01 / Project enquiry</p><h2>Request a Quote</h2><p className="contact-form-description">Tell us what work you need, where the site is, and how we can reach you.</p></div><QuoteForm /></div></section>

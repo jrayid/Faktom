@@ -1,17 +1,14 @@
-import type { Metadata } from "next";
 import Link from "next/link";
+import { BreadcrumbJsonLd, ServiceListJsonLd } from "@/components/StructuredData";
 import ServiceIcon from "@/components/ServiceIcon";
 import { services } from "@/data/services";
+import { pageMetadata } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "Electrical Services | Fakom International Services Ltd",
-  description:
-    "Explore Fakom electrical installation, infrastructure, power distribution, solar, high tension and transformer services.",
-};
+export const metadata = pageMetadata("Electrical Services", "Explore Fakom electrical installation, infrastructure, power distribution, solar, high tension and transformer services.", "/services");
 
 export default function ServicesPage() {
   return (
-    <main id="main" tabIndex={-1}>
+    <main id="main" tabIndex={-1}><BreadcrumbJsonLd items={[{ name: "Home", pathname: "/" }, { name: "Services", pathname: "/services" }]} /><ServiceListJsonLd services={services} />
       <section className="inner-hero">
         <div className="container inner-hero-content">
           <p className="eyebrow"><span className="eyebrow-line" /> Our services</p>

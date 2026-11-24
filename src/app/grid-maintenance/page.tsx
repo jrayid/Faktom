@@ -1,14 +1,12 @@
-import type { Metadata } from "next";
+import { BreadcrumbJsonLd } from "@/components/StructuredData";
+import { pageMetadata } from "@/lib/site";
 import Link from "next/link";
 import { gridMaintenance as content } from "@/data/gridMaintenance";
 
-export const metadata: Metadata = {
-  title: "Grid Maintenance for Vendors | Fakom International Services Ltd",
-  description: "Grid and electrical maintenance, fault response, transformer work and DISCO coordination for telecom tower sites and distribution networks.",
-};
+export const metadata = pageMetadata('Grid Maintenance', 'Grid and electrical maintenance, fault response, transformer work and DISCO coordination for telecom sites and distribution networks.', '/grid-maintenance');
 
 export default function GridMaintenancePage() {
-  return <main id="main" tabIndex={-1}>
+  return <main id="main" tabIndex={-1}><BreadcrumbJsonLd items={[{ name: "Home", pathname: "/" }, { name: 'Grid Maintenance', pathname: '/grid-maintenance' }]} />
     <section className="inner-hero vendor-hero"><div className="container inner-hero-content"><p className="eyebrow"><span className="eyebrow-line"/> Grid maintenance · Vendor services</p><h1>{content.heroTitle}</h1><p className="inner-hero-lede">{content.heroDescription}</p><div className="hero-actions"><Link className="button button-amber" href="/contact#vendor">Submit Vendor Enquiry <span aria-hidden="true">↗</span></Link><span className="pdf-placeholder" aria-disabled="true">Download Capability Statement <small>[PDF COMING]</small></span></div></div></section>
     <section className="section approach-section"><div className="container two-col-section"><div><p className="eyebrow">01 / Our approach</p><h2>Inspect first.<br/><em>Act on evidence.</em></h2></div><div className="approach-copy"><p>We assess site conditions with the relevant technical teams before recommending repairs or replacements.</p>{content.approach.map((item, index) => <div className="approach-step" key={item}><span>0{index + 1}</span><p>{item}</p></div>)}</div></div></section>
     <section className="scope-section"><div className="container"><div className="section-heading"><div><p className="eyebrow">02 / Scope of services</p><h2>Field support for<br/><em>power systems.</em></h2></div><p className="section-intro">Maintenance and infrastructure support for distribution networks and telecom tower sites.</p></div><div className="scope-grid">{content.scope.map((item, index) => <article className="scope-card" key={item.title}><span>0{index + 1}</span><h3>{item.title}</h3><p>{item.description}</p></article>)}</div></div></section>
