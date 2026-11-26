@@ -1,21 +1,21 @@
 @import "tailwindcss";
 :root {
   /* Fakom dark theme palette */
-  --navy: #111315;
-  --navy-deep: #0b0d0f;
-  --amber: #f5a623;
-  --ink: #f3f1eb;
-  --muted: #b6b9bc;
-  --paper: #111315;
-  --line: #3a3f45;
-  --line-strong: #51575e;
-  --surface-raised: #22262a;
-  --surface-muted: #1a1d20;
-  --surface-placeholder: #22262a;
-  --amber-ink: #f5a623;
-  --amber-light: #ffcb73;
-  --color-error: #ff8a80;
-  --color-error-border: #ff8a80;
+  --navy: #0e1a26;
+  --navy-deep: #091420;
+  --amber: #e3b04b;
+  --ink: #f7f9fb;
+  --muted: #c3cdd7;
+  --paper: #0e1a26;
+  --line: #33475a;
+  --line-strong: #4a6076;
+  --surface-raised: #1a2b3b;
+  --surface-muted: #14222f;
+  --surface-placeholder: #1a2b3b;
+  --amber-ink: #e3b04b;
+  --amber-light: #f0c870;
+  --color-error: #ff9a8f;
+  --color-error-border: #ff9a8f;
   /* Type and layout */
   --font-body: var(--font-inter, Arial), Helvetica, sans-serif;
   --font-display: var(--font-cormorant, Georgia), "Times New Roman", serif;
@@ -30,7 +30,7 @@
   --radius-control: 5px;
   --radius-panel: 5px;
   --radius-round: 50%;
-  --shadow-mobile-contact: 0 -3px 14px rgba(0, 0, 0, 0.42);
+  --shadow-mobile-contact: 0 -3px 14px rgba(9, 20, 32, 0.82);
   --shadow-header: none;
   --shadow-panel: none;
   --shadow-card-hover: none;
@@ -173,6 +173,9 @@ a {
   background: var(--amber-light);
   border-color: var(--amber-light);
 }
+.nav a.nav-contact[aria-current="page"] {
+  color: var(--navy-deep);
+}
 .nav-contact span {
   color: var(--navy-deep);
   margin-left: 12px;
@@ -308,9 +311,9 @@ button:disabled {
   height: 380px;
   background-color: var(--surface-muted);
   background-image:
-    radial-gradient(ellipse at 72% 78%, rgba(245, 166, 35, 0.12), transparent 42%),
-    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+    radial-gradient(ellipse at 72% 78%, rgba(227, 176, 75, 0.12), transparent 42%),
+    linear-gradient(rgba(247, 249, 251, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(247, 249, 251, 0.045) 1px, transparent 1px);
   background-size: auto, 42px 42px, 42px 42px;
   border: 1px solid var(--line);
   position: relative;
@@ -323,7 +326,7 @@ button:disabled {
   position: absolute;
   width: 330px;
   height: 330px;
-  border: 1px solid rgba(255,255,255,.08);
+  border: 1px solid rgba(247,249,251,.08);
   transform: rotate(45deg);
 }
 .hero-visual:after {
@@ -333,7 +336,7 @@ button:disabled {
 .photo-placeholder {
   height: 215px;
   width: 215px;
-  border: 1px dashed rgba(255,255,255,.4);
+  border: 1px dashed rgba(247,249,251,.4);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -380,7 +383,7 @@ button:disabled {
 }
 .hero-bottom {
   height: 58px;
-  border-top: 1px solid rgba(255,255,255,.15);
+  border-top: 1px solid rgba(247,249,251,.15);
   display: flex;
   align-items: center;
   gap: 15px;
@@ -519,7 +522,7 @@ button:disabled {
 .map-mark {
   width: 200px;
   height: 200px;
-  border: 1px solid rgba(245,166,35,.38);
+  border: 1px solid rgba(227,176,75,.38);
   border-radius: var(--radius-round);
   display: grid;
   place-items: center;
@@ -531,7 +534,7 @@ button:disabled {
 }
 .map-ring {
   position: absolute;
-  border: 1px solid rgba(245,166,35,.2);
+  border: 1px solid rgba(227,176,75,.2);
   border-radius: var(--radius-round);
   inset: 20px;
 }
@@ -549,7 +552,7 @@ button:disabled {
   position: absolute;
   top: 58px;
   left: 104px;
-  box-shadow: 0 0 0 6px rgba(245,166,35,.12);
+  box-shadow: 0 0 0 6px rgba(227,176,75,.12);
 }
 .projects-section {
   padding-top: 92px;
@@ -853,7 +856,7 @@ button:disabled {
 /* Services and grid maintenance */
 .inner-hero {
   background: var(--navy);
-  background-image: radial-gradient(ellipse at 82% 0%, rgba(245, 166, 35, 0.08), transparent 52%);
+  background-image: radial-gradient(ellipse at 82% 0%, rgba(227, 176, 75, 0.08), transparent 52%);
   color: var(--ink);
   padding: 75px 0 82px;
   border-bottom: 1px solid var(--line);
@@ -959,8 +962,8 @@ button:disabled {
   height: 34px;
   display: grid;
   place-items: center;
-  background: rgba(245, 166, 35, 0.08);
-  border: 1px solid rgba(245, 166, 35, 0.28);
+  background: rgba(227, 176, 75, 0.08);
+  border: 1px solid rgba(227, 176, 75, 0.28);
 }
 .catalog-icon svg {
   width: 21px;
@@ -1095,7 +1098,7 @@ button:disabled {
   padding: 22px;
   border-right: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
-  background: rgba(255,255,255,.025);
+  background: rgba(247,249,251,.025);
 }
 .scope-card>span {
   font-size: 11px;
@@ -1492,8 +1495,8 @@ button:disabled {
   place-items: center;
   background: var(--surface-placeholder);
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    linear-gradient(rgba(247, 249, 251, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(247, 249, 251, 0.035) 1px, transparent 1px);
   background-size: 36px 36px;
   border-bottom: 1px solid var(--line);
   color: var(--muted);
@@ -1651,8 +1654,8 @@ button:disabled {
   overflow: hidden;
   background: var(--surface-muted);
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    linear-gradient(rgba(247, 249, 251, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(247, 249, 251, 0.035) 1px, transparent 1px);
   background-size: 36px 36px;
   display: grid;
   place-items: center;
@@ -1862,8 +1865,8 @@ button:disabled {
   min-height: 260px;
   background: var(--surface-muted);
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    linear-gradient(rgba(247, 249, 251, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(247, 249, 251, 0.035) 1px, transparent 1px);
   background-size: 36px 36px;
   border: 1px dashed var(--line-strong);
   display: grid;
@@ -2315,7 +2318,7 @@ button:disabled {
     padding: 12px 20px 20px;
     background: var(--paper);
     border-bottom: 1px solid var(--line);
-    box-shadow: 0 10px 18px rgba(0,0,0,.35);
+    box-shadow: 0 10px 18px rgba(9,20,32,.75);
     align-items: stretch;
     gap: 0;
     flex-direction: column;
@@ -2368,7 +2371,7 @@ button:disabled {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     padding: 8px max(16px,env(safe-area-inset-left)) calc(8px + env(safe-area-inset-bottom));
     gap: 9px;
-    background: rgba(11,13,15,.97);
+    background: rgba(9,20,32,.97);
     box-shadow: var(--shadow-mobile-contact);
   }
   .mobile-contact-actions a {
