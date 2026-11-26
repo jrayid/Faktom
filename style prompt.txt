@@ -1,0 +1,45 @@
+Change the site's colour palette only. Do not change layout, spacing,
+fonts, copy, components or any logic.
+
+Read src/app/globals.css first. All colours are CSS variables in the
+:root block at the top. Update them to the values below, keeping the
+variable names:
+
+--navy: #0e1a26;
+--navy-deep: #091420;
+--paper: #0e1a26;
+--surface-muted: #14222f;
+--surface-raised: #1a2b3b;
+--surface-placeholder: #1a2b3b;
+--line: #33475a;
+--line-strong: #4a6076;
+--ink: #f7f9fb;
+--muted: #c3cdd7;
+--amber: #e3b04b;
+--amber-ink: #e3b04b;
+--amber-light: #f0c870;
+--color-error: #ff9a8f;
+--color-error-border: #ff9a8f;
+
+Then:
+1. Search globals.css and every .tsx file for hard-coded colours (hex,
+   rgb, rgba, hsl, named) that duplicate the old palette: #111315,
+   #0b0d0f, #1a1d20, #22262a, #3a3f45, #51575e, #f3f1eb, #b6b9bc,
+   #f5a623, #ffcb73, #ff8a80, and rgba values built from them
+   (for example the amber glow on the hero and the black shadows). Replace each with the
+   matching variable or an equivalent derived from the new palette. Do
+   not leave any old orange or charcoal behind.
+2. Text on amber buttons must use var(--navy-deep) for dark text.
+3. Update the opengraph-image, icon.svg and apple-icon (if they use the
+   old colours) to the new navy and gold. The icon.svg should keep the
+   "F" monogram with a gold dot on the new navy.
+4. Update theme-color in metadata, if present, to #0e1a26.
+5. Do not use pure white (#fff) or pure black (#000) for text or
+   backgrounds.
+6. Check contrast: body and small text must stay at least 4.5:1 against
+   their background, and button text at least 4.5:1.
+
+Check every page at 360px and 1280px. Run npm run lint and npm run
+build; both must pass. Commit as "Update palette: navy and brass".
+List every file changed and any hard-coded colour you left on purpose,
+with the reason. Then stop and wait for my approval.
